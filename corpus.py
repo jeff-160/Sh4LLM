@@ -1,6 +1,10 @@
 import os
 
-header = "3P3 Shalom: "
+names = [
+    "3P3 Shalom: ",
+    "Shalom Chai: ",
+    "~ lom: "
+]
 
 filter = [
     "3P3 Shalom left",
@@ -17,11 +21,19 @@ corpus = []
 
 for file in map(lambda name : f"chats\\{name}", os.listdir("chats")):
     with open(file, encoding="utf-8") as f:
-        contents = [
-            line[line.index(header) + len(header): ].replace("‎", "").strip()
-            for line in f.readlines()
-            if header in line and all(map(lambda x : x not in line, filter))
-        ]
+        contents = []
+
+        for line in f.readlines():
+            try:
+                header = [
+                    name
+                    for name in names if line.find(name) != -1
+                ][0]
+
+                if all(map(lambda x: x not in line, filter)):
+                    contents.append(line[line.index(header) + len(header): ].replace("‎", "").strip())
+            except:
+                continue
     
     corpus.extend(contents)
     
