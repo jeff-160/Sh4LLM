@@ -12,7 +12,7 @@ chatbot = ChatBot(
 )
 
 while True:
-    query = input("> ")
+    query = input("> ").strip()
 
     if len(query):
         print(f"Sh4LLM: {chatbot.get_response(query)}")
