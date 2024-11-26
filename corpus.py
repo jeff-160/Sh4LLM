@@ -14,7 +14,8 @@ filter = [
     "sticker omitted",
     "image omitted",
     "joined using this group's invite link",
-    "was added"
+    "was added",
+    "changed the group name"
 ]
 
 corpus = []
