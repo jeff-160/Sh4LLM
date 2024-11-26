@@ -11,4 +11,4 @@ while True:
     if query == "exit":
         break
     else:
-        print(f"SH4llm: {chatbot.get_response(query)}")
+        print(f"Sh4LLM: {chatbot.get_response(query)}")
