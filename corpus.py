@@ -1,4 +1,4 @@
-import os
+import os, re
 
 names = [
     "3P3 Shalom: ",
@@ -19,23 +19,31 @@ filter = [
 
 corpus = []
 
-for file in map(lambda name : f"chats\\{name}", os.listdir("chats")):
-    with open(file, encoding="utf-8") as f:
+for file in map(lambda name: f"chats\\{name}", os.listdir("chats")):
+    with open(file, encoding = "utf-8") as f:
         contents = []
 
         for line in f.readlines():
             try:
                 header = [
                     name
-                    for name in names if line.find(name) != -1
+                    for name in names 
+                    if line.find(name) != -1
                 ][0]
 
                 if all(map(lambda x: x not in line, filter)):
-                    contents.append(line[line.index(header) + len(header): ].replace("‎", "").strip())
+                    cleaned_line = re.sub(
+                        r"@\w+", "", 
+                        line[line.index(header) + len(header): ].replace("‎", "")
+                    ).strip()
+
+                    if len(cleaned_line):
+                        contents.append(cleaned_line)
+                        
             except:
                 continue
     
     corpus.extend(contents)
     
-with open("corpus.txt", "w", encoding="utf-8") as f:
+with open("corpus.txt", "w", encoding = "utf-8") as f:
     f.write("\n".join(corpus))
